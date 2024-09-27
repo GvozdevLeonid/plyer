@@ -101,6 +101,12 @@ class Wifi:
         '''
         return self._is_connected(interface=interface)
 
+    def connected_ssid(self, interface=None):
+        '''
+        Return returns ssid of connected WiFi interface.
+        '''
+        return self._connected_ssid(interface=interface)
+
     @property
     def interfaces(self):
         '''
@@ -163,6 +169,9 @@ class Wifi:
         raise NotImplementedError()
 
     def _is_connected(self, interface=None):
+        raise NotImplementedError()
+
+    def _connected_ssid(self, interface=None):
         raise NotImplementedError()
 
     def _start_scanning(self, interface=None):

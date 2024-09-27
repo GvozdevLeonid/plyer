@@ -23,6 +23,21 @@ class OSXWifi(Wifi):
         '''
         return CWWiFiClient.sharedWiFiClient().interface().powerOn()
 
+    def _is_connected(self, interface=None):
+        '''
+        Return whether a specified interface is connected to a WiFi network.
+        '''
+        if not self._is_enabled():
+            self._enable()
+
+        return CWInterface.interface().ssid() is not None
+
+    def _connected_ssid(self, interface=None):
+        if not self._is_enabled():
+            self._enable()
+
+        return CWInterface.interface().ssid()
+
     def _get_network_info(self, name):
         '''
         Returns all the network information.
@@ -83,7 +98,7 @@ class OSXWifi(Wifi):
                 'venueGroup': venueGroup,
                 'venueType': venueType}
 
-    def _start_scanning(self):
+    def _start_scanning(self, interface=None):
         '''
         Starts scanning for available Wi-Fi networks.
         '''
@@ -105,7 +120,7 @@ class OSXWifi(Wifi):
         '''
         return self.names.keys()
 
-    def _connect(self, network, parameters):
+    def _connect(self, network, parameters, interface=None):
         '''
         Expects 2 parameters:
             - name/ssid of the network.
@@ -119,7 +134,7 @@ class OSXWifi(Wifi):
             None)
         return
 
-    def _disconnect(self):
+    def _disconnect(self, interface=None):
         '''
         Disconnect from network.
         '''

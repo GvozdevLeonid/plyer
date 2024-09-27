@@ -31,7 +31,7 @@ class WindowWifi(Wifi):
         '''
         return wifi_lib.get_network_info(name)
 
-    def _start_scanning(self):
+    def _start_scanning(self, interface=None):
         '''
         Starts scanning for available Wi-Fi networks and returns the available,
         devices.
@@ -47,7 +47,7 @@ class WindowWifi(Wifi):
         '''
         return wifi_lib.get_available_wifi()
 
-    def _connect(self, network, parameters):
+    def _connect(self, network, parameters, interface=None):
         '''
         Expects 2 parameters:
           - name/ssid of the network.
@@ -109,7 +109,7 @@ class WindowWifi(Wifi):
         wifi_lib.connect(network, parameters)
         return
 
-    def _disconnect(self):
+    def _disconnect(self, interface=None):
         '''
         Disconnect from network.
         '''

@@ -115,6 +115,21 @@ class NMCLIWifi(Wifi):
 
         return connected
 
+    def _connected_ssid(self, interface=None):
+        if not self._is_enabled():
+            self._enable()
+
+        ssid = None
+        ssid_proc = Popen(['nmcli', '-t', '-f', 'ACTIVE,SSID', 'connection'], stdout=PIPE)
+        ssid_lines = ssid_proc.communicate()[0].decode('utf-8').splitlines()
+        for ssid_line in ssid_lines:
+            active, ssid_value = ssid_line.split(':')
+            if active == 'yes':
+                ssid = ssid_value
+                break
+
+        return ssid
+
     def _start_scanning(self, interface=None):
         '''
         Start scanning for available Wi-Fi networks
@@ -358,6 +373,21 @@ class LinuxWifi(Wifi):
                 connected = True
 
         return connected
+
+    def _connected_ssid(self, interface=None):
+        if not self._is_enabled():
+            self._enable()
+
+        ssid = None
+        ssid_proc = Popen(['nmcli', '-t', '-f', 'ACTIVE,SSID', 'connection'], stdout=PIPE)
+        ssid_lines = ssid_proc.communicate()[0].decode('utf-8').splitlines()
+        for ssid_line in ssid_lines:
+            active, ssid_value = ssid_line.split(':')
+            if active == 'yes':
+                ssid = ssid_value
+                break
+
+        return ssid
 
     def _start_scanning(self, interface=None):
         '''
