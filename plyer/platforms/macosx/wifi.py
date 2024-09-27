@@ -36,7 +36,7 @@ class OSXWifi(Wifi):
         if not self._is_enabled():
             self._enable()
 
-        return CWInterface.interface().ssid()
+        return CWInterface.interface().ssid().UTF8String()
 
     def _get_network_info(self, name):
         '''
