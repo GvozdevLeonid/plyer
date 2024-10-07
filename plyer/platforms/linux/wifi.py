@@ -120,7 +120,7 @@ class NMCLIWifi(Wifi):
             self._enable()
 
         ssid = None
-        ssid_proc = Popen(['nmcli', '-t', '-f', 'ACTIVE,SSID', 'connection'], stdout=PIPE)
+        ssid_proc = Popen(['nmcli', '-t', '-f', 'ACTIVE,NAME', 'connection'], stdout=PIPE)
         ssid_lines = ssid_proc.communicate()[0].decode('utf-8').splitlines()
         for ssid_line in ssid_lines:
             active, ssid_value = ssid_line.split(':')
@@ -379,7 +379,7 @@ class LinuxWifi(Wifi):
             self._enable()
 
         ssid = None
-        ssid_proc = Popen(['nmcli', '-t', '-f', 'ACTIVE,SSID', 'connection'], stdout=PIPE)
+        ssid_proc = Popen(['nmcli', '-t', '-f', 'ACTIVE,NAME', 'connection'], stdout=PIPE)
         ssid_lines = ssid_proc.communicate()[0].decode('utf-8').splitlines()
         for ssid_line in ssid_lines:
             active, ssid_value = ssid_line.split(':')
