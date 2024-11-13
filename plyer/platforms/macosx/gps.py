@@ -142,7 +142,7 @@ class OSXGPS(GPS):
                 callback = self._connection_1.recv()
                 if 'on_status' in callback and self.on_status:
                     self.on_status(*callback['on_status'])
-                elif 'on_location':
+                elif 'on_location' in callback:
                     self.on_location(**callback['on_location'])
 
 
