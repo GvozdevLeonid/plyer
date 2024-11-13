@@ -81,9 +81,6 @@ class LocationManager:
         self._location_manager.startUpdatingLocation()
         NSRunLoop.currentRunLoop().run()
 
-    def stop(self):
-        self._location_manager.stopUpdatingLocation()
-
     @protocol('CLLocationManagerDelegate')
     def locationManager_didChangeAuthorizationStatus_(self, manager, status):
         s_status = ''
