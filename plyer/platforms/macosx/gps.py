@@ -134,7 +134,8 @@ class OSXGPS(GPS):
         self._thread.start()
 
     def _stop(self, **kwargs):
-        self._process.kill()
+        if hasattr(self, '_process'):
+            self._process.kill()
 
     def _run_thread_pipe_checker(self):
         while self._process.is_alive():
