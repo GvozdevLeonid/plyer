@@ -126,10 +126,10 @@ class LocationManager:
 class OSXGPS(GPS):
     def _configure(self):
         self._connection_1, self._connection_2 = Pipe()
-
-    def _start(self, **kwargs):
         self._process = Process(target=LocationManager._run_location_manager, args=[self._connection_2])
         self._thread = Thread(target=self._run_thread_pipe_checker)
+
+    def _start(self, **kwargs):
         self._process.start()
         self._thread.start()
 
