@@ -31,6 +31,7 @@ class OSXGPS(GPS):
     def _run_loop(self):
         self._location_manager = CLLocationManager.alloc().init()
         self._location_manager.setDelegate_(self)
+        self._location_manager.desiredAccuracy = -1.0
 
         self._location_manager.requestWhenInUseAuthorization()
         self._run_loop = NSRunLoop.currentRunLoop()
@@ -42,6 +43,9 @@ class OSXGPS(GPS):
             time.sleep(0.1)
 
     def _start(self, **kwargs):
+        min_distance = kwargs.get('minDistance')
+        self._location_manager.distanceFilter = min_distance
+
         self._location_manager.startUpdatingLocation()
         self._is_running = True
 
