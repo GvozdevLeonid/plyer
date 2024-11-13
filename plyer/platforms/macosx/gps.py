@@ -1,4 +1,5 @@
 from pyobjus.dylib_manager import load_framework
+from pickle import UnpicklingError
 from threading import Thread
 from multiprocessing import (
     Process,
@@ -134,17 +135,20 @@ class OSXGPS(GPS):
         self._thread.start()
 
     def _stop(self, **kwargs):
-        if hasattr(self, '_process'):
+        if self._process is not None:
             self._process.kill()
 
     def _run_thread_pipe_checker(self):
         while self._process.is_alive():
             if self._connection_1.poll(.1):
-                callback = self._connection_1.recv()
-                if 'on_status' in callback and self.on_status:
-                    self.on_status(*callback['on_status'])
-                elif 'on_location' in callback:
-                    self.on_location(**callback['on_location'])
+                try:
+                    callback = self._connection_1.recv()
+                    if 'on_status' in callback and self.on_status:
+                        self.on_status(*callback['on_status'])
+                    elif 'on_location' in callback:
+                        self.on_location(**callback['on_location'])
+                except (EOFError, UnpicklingError):
+                    pass
 
 
 def instance():
