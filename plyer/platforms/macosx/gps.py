@@ -34,7 +34,7 @@ class OSXGPS(GPS):
         self._location_manager.setDelegate_(self)
         self._location_manager.desiredAccuracy = -1.0
 
-        self._location_manager.requestWhenInUseAuthorization()
+        self._location_manager.requestAlwaysAuthorization()
         self._run_loop = NSRunLoop.currentRunLoop()
 
         while self._run_loop_thread_allow:
@@ -46,6 +46,9 @@ class OSXGPS(GPS):
     def _start(self, **kwargs):
         min_distance = kwargs.get('minDistance')
         self._location_manager.distanceFilter = min_distance
+
+        if self._location_manager.authorizationStatus == 2:
+            self.on_status('provider-disabled', 'standard-macos-provider: denied')
 
         self._location_manager.startUpdatingLocation()
         self._is_running = True
@@ -81,8 +84,13 @@ class OSXGPS(GPS):
     def locationManager_didUpdateLocations_(self, manager, locations):
         location = manager.location
 
-        description = location.description().UTF8String()
+        try:
+            description = location.description().UTF8String()
+        except Exception:
+            description = location.description.UTF8String()
+
         split_description = description.split('<')[-1].split('>')[0].split(',')
+
         lat, lon = [float(coord) for coord in split_description]
         acc = float(description.split(' +/- ')[-1].split('m ')[0])
 
