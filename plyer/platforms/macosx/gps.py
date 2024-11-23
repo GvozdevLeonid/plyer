@@ -1,9 +1,10 @@
-from pyobjus.dylib_manager import load_framework
-from pyobjus import autoclass, protocol
-from plyer.facades import GPS
 import threading
 import time
 
+from pyobjus import autoclass, protocol
+from pyobjus.dylib_manager import load_framework
+
+from plyer.facades import GPS
 
 load_framework('/System/Library/Frameworks/CoreLocation.framework')
 load_framework('/System/Library/Frameworks/Foundation.framework')
@@ -49,7 +50,7 @@ class OSXGPS(GPS):
         self._location_manager.startUpdatingLocation()
         self._is_running = True
 
-    def _stop(self, **kwargs):
+    def _stop(self):
         self._location_manager.stopUpdatingLocation()
         self._is_running = False
 
@@ -74,13 +75,7 @@ class OSXGPS(GPS):
             elif status == 4:
                 provider_status = 'provider-enabled'
                 s_status = 'authorizedWhenInUse'
-
-            self.on_status(
-                **{
-                    'provider_status': provider_status,
-                    'status_message': '{}: {}'.format(provider, s_status)
-                }
-            )
+        self.on_status(provider_status, f'{provider}: {s_status}')
 
     @protocol('CLLocationManagerDelegate')
     def locationManager_didUpdateLocations_(self, manager, locations):
@@ -98,8 +93,8 @@ class OSXGPS(GPS):
                 'altitude': location.altitude,
                 'speed': location.speed,
                 'course': location.course,
-                'acc': acc
-            }
+                'acc': acc,
+            },
         )
 
 

@@ -38,7 +38,7 @@ implement the API in the easiest way, depending on the current platform.
 
 | Platform                       | Android | iOS | Windows | macOS | Linux |
 | ------------------------------ |:-------:|:---:|:-------:|:-----:|:-----:|
-| Accelerometer                  | ✔       |  ✔ |         | ✔     |   ✔   |
+| Accelerometer                  | ✔       |  ✔  |         | ✔     |   ✔   |
 | Audio recording                | ✔       |     |    ✔    | ✔     |       |
 | Barometer                      | ✔       |  ✔  |         |       |       |
 | Battery                        | ✔       |  ✔  |    ✔    | ✔     |   ✔   |
@@ -51,7 +51,7 @@ implement the API in the easiest way, depending on the current platform.
 | Devicename                     | ✔       |     |    ✔    | ✔     |   ✔   |
 | Email (open mail client)       | ✔       |  ✔  |    ✔    | ✔     |   ✔   |
 | Flash                          | ✔       |  ✔  |         |       |       |
-| GPS                            | ✔       |  ✔  |         |       |       |
+| GPS                            | ✔       |  ✔  |         | ✔     |       |
 | Gravity                        | ✔       |  ✔  |         |       |       |
 | Gyroscope                      | ✔       |  ✔  |         |       |       |
 | Humidity                       | ✔       |     |         |       |       |

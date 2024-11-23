@@ -26,9 +26,9 @@ try:
                 'ios': ['pyobjus'],
                 'macosx': ['pyobjus'],
                 'android': ['pyjnius'],
-                'dev': ['flake8']
-            }
-        }
+                'dev': ['flake8'],
+            },
+        },
     )
 
 except ImportError:
