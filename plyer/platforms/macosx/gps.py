@@ -78,7 +78,8 @@ class OSXGPS(GPS):
             elif status == 4:
                 provider_status = 'provider-enabled'
                 s_status = 'authorizedWhenInUse'
-        self.on_status(provider_status, f'{provider}: {s_status}')
+
+            self.on_status(provider_status, f'{provider}: {s_status}')
 
     @protocol('CLLocationManagerDelegate')
     def locationManager_didUpdateLocations_(self, manager, locations):
