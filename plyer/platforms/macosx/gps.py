@@ -48,7 +48,8 @@ class OSXGPS(GPS):
         self._location_manager.distanceFilter = min_distance
 
         if self._location_manager.authorizationStatus == 2:
-            self.on_status('provider-disabled', 'standard-macos-provider: denied')
+            if self.on_status:
+                self.on_status('provider-disabled', 'standard-macos-provider: denied')
 
         self._location_manager.startUpdatingLocation()
         self._is_running = True
