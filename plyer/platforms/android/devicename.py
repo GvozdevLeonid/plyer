@@ -5,8 +5,6 @@ Module of Android API for plyer.devicename.
 from jnius import autoclass
 from plyer.facades import DeviceName
 
-Build = autoclass('android.os.Build')
-
 
 class AndroidDeviceName(DeviceName):
     '''
@@ -23,10 +21,16 @@ class AndroidDeviceName(DeviceName):
 
         Thereby making this method more backward compatible.
         """
+
+        Build = autoclass('android.os.Build')
         PythonActivity = autoclass('org.kivy.android.PythonActivity')
-        context = PythonActivity.mActivity
         SettingsSecure = autoclass('android.provider.Settings$Secure')
-        return SettingsSecure.getString(context.getContentResolver(), "device_name")
+
+        context = PythonActivity.mActivity
+        name = SettingsSecure.getString(context.getContentResolver(), "device_name")
+
+        if not name:
+            name = Build.MODEL
 
 
 def instance():
