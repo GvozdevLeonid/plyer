@@ -24,10 +24,10 @@ class AndroidDeviceName(DeviceName):
 
         Build = autoclass('android.os.Build')
         PythonActivity = autoclass('org.kivy.android.PythonActivity')
-        SettingsSecure = autoclass('android.provider.Settings$Secure')
+        SettingsGlobal = autoclass('android.provider.Settings$Global')
 
         context = PythonActivity.mActivity
-        name = SettingsSecure.getString(context.getContentResolver(), "device_name")
+        name = SettingsGlobal.getString(context.getContentResolver(), SettingsGlobal.DEVICE_NAME)
 
         if not name:
             name = Build.MODEL
