@@ -23,7 +23,10 @@ class AndroidDeviceName(DeviceName):
 
         Thereby making this method more backward compatible.
         """
-        return Build.MODEL
+        PythonActivity = autoclass('org.kivy.android.PythonActivity')
+        context = PythonActivity.mActivity
+        SettingsSecure = autoclass('android.provider.Settings$Secure')
+        return SettingsSecure.getString(context.getContentResolver(), "device_name")
 
 
 def instance():
