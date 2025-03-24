@@ -32,6 +32,8 @@ class AndroidDeviceName(DeviceName):
         if not name:
             name = Build.MODEL
 
+        return name
+
 
 def instance():
     '''
