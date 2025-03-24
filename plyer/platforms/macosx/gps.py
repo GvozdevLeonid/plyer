@@ -2,12 +2,12 @@ import threading
 import time
 
 from pyobjus import autoclass, protocol
-from pyobjus.dylib_manager import load_framework
+from pyobjus.dylib_manager import INCLUDE, load_framework
 
 from plyer.facades import GPS
 
-load_framework('/System/Library/Frameworks/CoreLocation.framework')
-load_framework('/System/Library/Frameworks/Foundation.framework')
+load_framework(INCLUDE.CoreLocation)
+load_framework(INCLUDE.Foundation)
 
 
 CLLocationManager = autoclass('CLLocationManager')
