@@ -40,6 +40,12 @@ class Orientation:
     Orientation facade.
     '''
 
+    def get_orientation(self) -> str:
+        '''
+        Return current screen rotation (landscape, landscape-reversed, portrait, portrait-reversed, unknown)
+        '''
+        return self._get_landscape()
+
     def set_landscape(self, reverse=False):
         '''
         Rotate the app to a landscape orientation.
@@ -70,6 +76,9 @@ class Orientation:
         self._set_sensor(mode=mode)
 
     # private
+
+    def _get_landscape(self, **kwargs):
+        raise NotImplementedError()
 
     def _set_landscape(self, **kwargs):
         raise NotImplementedError()

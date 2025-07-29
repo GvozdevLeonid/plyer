@@ -3,6 +3,7 @@ from plyer.platforms.android import activity
 from plyer.facades import Orientation
 
 ActivityInfo = autoclass('android.content.pm.ActivityInfo')
+Surface = autoclass('android.view.Surface')
 
 
 class AndroidOrientation(Orientation):
@@ -37,6 +38,21 @@ class AndroidOrientation(Orientation):
         elif mode == 'portrait':
             activity.setRequestedOrientation(
                 ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT)
+
+    def _get_orientation(self):
+        rotation = activity.getWindowManager().getDefaultDisplay().getRotation()
+
+        if rotation == Surface.ROTATION_0:
+            return 'portrait'
+        if rotation == Surface.ROTATION_90:
+            return 'landscape'
+        if rotation == Surface.ROTATION_180:
+            return 'portrait-reversed'
+        if rotation == Surface.ROTATION_270:
+            return 'landscape-reversed'
+
+        return 'unknown'
+
 
 
 def instance():
